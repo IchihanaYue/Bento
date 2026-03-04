@@ -2,41 +2,51 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Bento</title>
-		<link rel=" shortcut icon" type="image/png" href="assets/icons/favicon.png" />
+		<title>New Tab</title>
+		<link rel=" shortcut icon" type="image/png" href="assets/img/81800.png" />
 		<link rel="stylesheet" href="app.css" />
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 
-	<!-- 
+	<!--
       ╔╗ ╔═╗╔╗╔╔╦╗╔═╗
       ╠╩╗║╣ ║║║ ║ ║ ║
       ╚═╝╚═╝╝╚╝ ╩ ╚═╝
       -->
 
 	<body class="">
-		<button id="themeButton">
+		<!-- <button id="themeButton">
 			<i id="themeIcon" icon-name="moon"></i>
-		</button>
+		</button> -->
 		<div class="container">
-			<!-- Clock and Greetings  -->
 
+			<!-- Search Bar -->
+			<div class="search-container">
+				<form action="https://www.google.com/search" method="GET" target="" class="search-form">
+				<input type="text" name="q" placeholder="Search Google..." class="search-input" autocomplete="off">
+				<button type="submit" class="search-button">
+					<i data-lucide="search"></i>
+				</button>
+				</form>
+			</div>
+
+			<!-- Clock and Greetings  -->
 			<div class="timeBlock">
 				<div class="clock">
 					<div id="hour"></div>
 					<div id="separator"></div>
 					<div id="minutes"></div>
 				</div>
-				<div id="greetings"></div>
-			</div>
-
-			<!-- Date and Weather  -->
-
-			<div class="weatherBlock">
 				<div class="date">
 					<div id="month"></div>
 					<div id="day"></div>
 				</div>
+				<div id="greetings"></div>
+			</div>
+
+			<!-- Date and Weather 
+
+			<div class="weatherBlock">
 				<div class="weather">
 					<div class="weatherIcon">
 						<img src="assets/icons/OneDark/unknown.png" />
@@ -48,27 +58,32 @@
 						<p></p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="linksBlock" id="linksBlock">
 				<div class="linksBlockLeft" id="linksBlockLeft"></div>
-				<div class="linksBlockRight" id="linksBlockRight"></div>
+				<!-- <div class="linksBlockRight" id="linksBlockRight"></div> -->
 			</div>
+
+			<div class="imageBlock" id="imageBlock">
+          		<img src="assets/img/Ghej89jacAIPBZw.png" alt="Lucyna art by @ireading62">
+        	</div>
 		</div>
+
 
 		<!-- Config  -->
 		<script src="config.js"></script>
 
 		<!-- Scripts  -->
 		<script src="assets/js/layout.js"></script>
-		<script src="assets/js/theme.js"></script>
+		<!-- <script src="assets/js/theme.js"></script> -->
 		<script src="assets/js/time.js"></script>
 		<script src="assets/js/greeting.js"></script>
-		<script src="assets/js/weather.js"></script>
+		<!-- <script src="assets/js/weather.js"></script> -->
 
 		<!-- Generators  -->
 		<script src="assets/js/buttons.js"></script>
-		<script src="assets/js/lists.js"></script>
+		<!-- <script src="assets/js/lists.js"></script> -->
 
 		<!-- Icons -->
 		<script>

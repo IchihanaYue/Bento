@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>New Tab</title>
-		<link rel=" shortcut icon" type="image/png" href="assets/img/81800.png" />
-		<link rel="stylesheet" href="app.css" />
-		<script src="https://unpkg.com/lucide@latest"></script>
-	</head>
 
-	<!--
+<head>
+	<meta charset="UTF-8" />
+	<title>New Tab</title>
+	<link rel=" shortcut icon" type="image/png" href="assets/img/81800.png" />
+	<link rel="stylesheet" href="app.css" />
+	<script src="https://unpkg.com/lucide@0.330.0"></script>
+</head>
+
+<!--
       ╔╗ ╔═╗╔╗╔╔╦╗╔═╗
       ╠╩╗║╣ ║║║ ║ ║ ║
       ╚═╝╚═╝╝╚╝ ╩ ╚═╝
       -->
 
-	<body class="">
-		<!-- <button id="themeButton">
+<body class="">
+	<!-- <button id="themeButton">
 			<i id="themeIcon" icon-name="moon"></i>
 		</button> -->
-		<div class="container">
+	<div class="container">
 
-			<!-- Search Bar -->
-			<div class="search-container">
-				<form action="https://www.google.com/search" method="GET" target="" class="search-form">
+		<!-- Search Bar -->
+		<div class="search-container">
+			<form action="https://www.google.com/search" method="GET" target="" class="search-form">
 				<input type="text" name="q" placeholder="Search Google..." class="search-input" autocomplete="off">
 				<button type="submit" class="search-button">
 					<i data-lucide="search"></i>
 				</button>
-				</form>
-			</div>
+			</form>
+		</div>
 
-			<!-- Clock and Greetings  -->
-			<div class="timeBlock">
-				<div class="clock">
-					<div id="hour"></div>
-					<div id="separator"></div>
-					<div id="minutes"></div>
-				</div>
-				<div class="date">
-					<div id="month"></div>
-					<div id="day"></div>
-				</div>
-				<div id="greetings"></div>
+		<!-- Clock and Greetings  -->
+		<div class="timeBlock">
+			<div class="clock">
+				<div id="hour"></div>
+				<div id="separator"></div>
+				<div id="minutes"></div>
 			</div>
+			<div class="date">
+				<div id="month"></div>
+				<div id="day"></div>
+			</div>
+			<div id="greetings"></div>
+		</div>
 
-			<!-- Date and Weather 
+		<!-- Date and Weather 
 
 			<div class="weatherBlock">
 				<div class="weather">
@@ -60,37 +61,39 @@
 				</div>
 			</div> -->
 
-			<div class="linksBlock" id="linksBlock">
-				<div class="linksBlockLeft" id="linksBlockLeft"></div>
-				<!-- <div class="linksBlockRight" id="linksBlockRight"></div> -->
-			</div>
-
-			<div class="imageBlock" id="imageBlock">
-          		<img src="assets/img/Ghej89jacAIPBZw.png" alt="Lucyna art by @ireading62">
-        	</div>
+		<div class="linksBlock" id="linksBlock">
+			<div class="linksBlockLeft" id="linksBlockLeft"></div>
+			<!-- <div class="linksBlockRight" id="linksBlockRight"></div> -->
 		</div>
 
+		<div class="imageBlock" id="imageBlock">
+			<img src="assets/floating-img/Ghej89jacAIPBZw.png" alt="Lucyna art by @ireading62">
+		</div>
+	</div>
 
-		<!-- Config  -->
-		<script src="config.js"></script>
 
-		<!-- Scripts  -->
-		<script src="assets/js/layout.js"></script>
-		<!-- <script src="assets/js/theme.js"></script> -->
-		<script src="assets/js/time.js"></script>
-		<script src="assets/js/greeting.js"></script>
-		<!-- <script src="assets/js/weather.js"></script> -->
+	<!-- Config  -->
+	<script src="config.js"></script>
 
-		<!-- Generators  -->
-		<script src="assets/js/buttons.js"></script>
-		<!-- <script src="assets/js/lists.js"></script> -->
+	<!-- Scripts  -->
+	<script src="assets/js/layout.js"></script>
+	<!-- <script src="assets/js/theme.js"></script> -->
+	<script src="assets/js/time.js"></script>
+	<script src="assets/js/greeting.js"></script>
+	<!-- <script src="assets/js/weather.js"></script> -->
 
-		<!-- Icons -->
-		<script>
-			lucide.createIcons();
-		</script>
-	</body>
+	<!-- Generators  -->
+	<script src="assets/js/buttons.js"></script>
+	<!-- <script src="assets/js/lists.js"></script> -->
+	<script src="assets/js/imageCarousel.js"></script>
 
-	<!-- Developed and designed by Miguel Ávila: -->
-	<!-- https://avila.sh-->
+	<!-- Icons -->
+	<script>
+		lucide.createIcons();
+	</script>
+</body>
+
+<!-- Developed and designed by Miguel Ávila: -->
+<!-- https://avila.sh-->
+
 </html>

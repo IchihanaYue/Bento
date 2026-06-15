@@ -67,7 +67,7 @@ const CONFIG = {
 			id: '3',
 			name: 'Olaz',
 			icon: 'server',
-			link: 'http://drive.olaz.io.vn',
+			link: 'http://oc.olaz.io.vn',
 		},
 		{
 			id: '4',

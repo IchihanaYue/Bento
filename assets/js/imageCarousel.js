@@ -1,91 +1,88 @@
 // Image Carousel for imageBlock
-// Cycles through all images in assets/floating-img/
+// Cover Flow / Peeking Carousel: Displays 1 focused image in the center with previous and next images peeking on left & right sides.
 
 (function () {
 	const floatingImages = [
-		'assets/floating-img/GhdXPCPakAA3XCs.jfif',
-		'assets/floating-img/GhdtMl9bgAAJI0g.jfif',
-		'assets/floating-img/GhdtTUYacAADz0v.jfif',
 		'assets/floating-img/Ghej89jacAIPBZw.png',
+		'assets/floating-img/GhdtMl9bgAAJI0g.jfif',
+		'assets/floating-img/GhdXPCPakAA3XCs.jfif',
+		'assets/floating-img/GhdtTUYacAADz0v.jfif',
 	];
 
-	const CYCLE_INTERVAL = 10000; // 10 seconds between transitions
-	const SLIDE_DURATION = 800; // ms for slide transition
+	const CYCLE_INTERVAL = 8000;
+	const TRANSITION_DURATION = 800;
 
-	let currentIndex = 0;
 	const imageBlock = document.getElementById('imageBlock');
 	if (!imageBlock) return;
 
-	// Pick a random starting image
-	currentIndex = Math.floor(Math.random() * floatingImages.length);
+	let activeIndex = 0;
+	const total = floatingImages.length;
 
-	// Create an inner wrapper to handle overflowing and positioning
-	// This prevents the padding from being an issue while retaining original layout
-	const innerWrapper = document.createElement('div');
-	innerWrapper.style.position = 'relative';
-	innerWrapper.style.width = '100%';
-	innerWrapper.style.height = '100%';
-	innerWrapper.style.overflow = 'hidden';
-	innerWrapper.style.display = 'block';
-	
-	innerWrapper.className = 'carousel-wrapper';
+	// Viewport track
+	const track = document.createElement('div');
+	track.className = 'peek-carousel-track';
+	imageBlock.innerHTML = '';
+	imageBlock.appendChild(track);
 
-	// Setup the existing image
-	const existingImg = imageBlock.querySelector('img');
-	if (existingImg) {
-		existingImg.src = floatingImages[currentIndex];
-		existingImg.style.position = 'absolute';
-		existingImg.style.left = '0%';
-		existingImg.style.top = '0%';
-		existingImg.style.width = '100%';
-		existingImg.style.height = '100%';
-		
-		// Transition only for slide effect now
-		existingImg.style.transition = `left ${SLIDE_DURATION}ms ease-in-out`;
-
-		// Wrap the image
-		imageBlock.innerHTML = '';
-		innerWrapper.appendChild(existingImg);
-		imageBlock.appendChild(innerWrapper);
+	function getIndex(offset) {
+		return (activeIndex + offset + total) % total;
 	}
 
-	function cycleImage() {
-		const nextIndex = (currentIndex + 1) % floatingImages.length;
+	function createCard(imgSrc, positionClass) {
+		const card = document.createElement('div');
+		card.className = `peek-card ${positionClass}`;
+		card.innerHTML = `<img src="${imgSrc}" alt="Carousel Artwork">`;
+		return card;
+	}
 
-		// Create the next image off-screen to the right
-		const nextImg = document.createElement('img');
-		nextImg.src = floatingImages[nextIndex];
-		nextImg.style.position = 'absolute';
-		nextImg.style.left = '100%'; // Start outside the view
-		nextImg.style.top = '0%';
-		nextImg.style.width = '100%';
-		nextImg.style.height = '100%';
-		nextImg.style.transition = `left ${SLIDE_DURATION}ms ease-in-out`;
-		nextImg.alt = 'Carousel Image';
+	let leftCard = createCard(floatingImages[getIndex(-1)], 'peek-left');
+	let centerCard = createCard(floatingImages[getIndex(0)], 'peek-center');
+	let rightCard = createCard(floatingImages[getIndex(1)], 'peek-right');
 
-		innerWrapper.appendChild(nextImg);
+	track.appendChild(leftCard);
+	track.appendChild(centerCard);
+	track.appendChild(rightCard);
 
-		// Force reflow so the browser registers the starting position before animating
-		void nextImg.offsetWidth;
+	function cycleNext() {
+		activeIndex = (activeIndex + 1) % total;
 
-		// Find the current image (the one currently at left: 0%)
-		// In some rare cases, multiple images might be there if transitions overlap,
-		// but the first child is the oldest one being viewed.
-		const currentImg = innerWrapper.children[0];
+		// The current left card moves to far left and gets removed
+		leftCard.className = 'peek-card peek-far-left';
 
-		// Animate both images: current moves left, next moves in
-		currentImg.style.left = '-100%';
-		nextImg.style.left = '0%';
+		// The current center card becomes the left peeking card
+		centerCard.className = 'peek-card peek-left';
 
-		// Clean up the old image after the transition completes
+		// The current right card becomes the center active card
+		rightCard.className = 'peek-card peek-center';
+
+		// Create new right peeking card entering from far right
+		const newRightIndex = getIndex(1);
+		const newRightCard = createCard(floatingImages[newRightIndex], 'peek-far-right');
+		track.appendChild(newRightCard);
+
+		// Force reflow
+		void newRightCard.offsetWidth;
+
+		// Move new right card into peek-right position
+		newRightCard.className = 'peek-card peek-right';
+
+		// Cleanup old left card
+		const oldLeft = leftCard;
 		setTimeout(() => {
-			if (currentImg && currentImg.parentNode) {
-				currentImg.parentNode.removeChild(currentImg);
+			if (oldLeft && oldLeft.parentNode) {
+				oldLeft.parentNode.removeChild(oldLeft);
 			}
-		}, SLIDE_DURATION);
+		}, TRANSITION_DURATION);
 
-		currentIndex = nextIndex;
+		// Update card references
+		leftCard = centerCard;
+		centerCard = rightCard;
+		rightCard = newRightCard;
 	}
 
-	setInterval(cycleImage, CYCLE_INTERVAL);
+	setInterval(cycleNext, CYCLE_INTERVAL);
 })();
+
+
+
+

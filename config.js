@@ -87,7 +87,45 @@ const CONFIG = {
 			icon: 'facebook',
 			link: 'https://facebook.com/',
 		},
+		{
+			id: '7',
+			name: 'Spotify',
+			icon: 'headphones',
+			link: 'https://open.spotify.com/',
+		},
+		{
+			id: '8',
+			name: 'Discord',
+			icon: 'bot',
+			link: 'https://discord.com/app',
+		},
+		{
+			id: '9',
+			name: 'Reddit',
+			icon: 'glasses',
+			link: 'https://reddit.com',
+		},
+		{
+			id: '10',
+			name: 'Twitch',
+			icon: 'tv',
+			link: 'https://twitch.tv',
+		},
+		{
+			id: '11',
+			name: 'Steam',
+			icon: 'gamepad-2',
+			link: 'https://store.steampowered.com',
+		},
+		{
+			id: '12',
+			name: 'Notion',
+			icon: 'book-open',
+			link: 'https://notion.so',
+		},
 	],
+
+
 
 	secondButtonsContainer: [
 		{

@@ -33,17 +33,51 @@
 
 		<!-- Clock and Greetings  -->
 		<div class="timeBlock">
-			<div class="clock">
-				<div id="hour"></div>
-				<div id="separator"></div>
-				<div id="minutes"></div>
+			<div class="time-header">
+				<div class="clock">
+					<span id="hour"></span><span id="separator">:</span><span id="minutes"></span>
+				</div>
+				<div id="greetings"></div>
 			</div>
-			<div class="date">
-				<div id="month"></div>
-				<div id="day"></div>
+			<div class="date-pill">
+				<span id="full-date" class="date-text"></span>
+				<button id="datePillBtn" class="date-pill-icon-btn" aria-label="Action">
+					<i data-lucide="square-up-right"></i>
+				</button>
 			</div>
-			<div id="greetings"></div>
 		</div>
+
+		<!-- Music Player -->
+		<div class="musicPlayerBlock" id="musicPlayerBlock">
+			<div class="music-player-container">
+				<div class="music-cover">
+					<img id="musicCover" src="assets/floating-img/GhdXPCPakAA3XCs.jfif" alt="Track Cover">
+				</div>
+				<div class="music-card">
+					<div class="music-info">
+						<div class="track-details">
+							<span id="trackTitle" class="track-title">Cyberpunk Synthwave</span>
+							<span id="trackArtist" class="track-artist">Yue Beats</span>
+						</div>
+						<div class="progress-container">
+							<span id="currentTime" class="time-stamp">1:24</span>
+							<div class="progress-bar-bg" id="progressBarBg">
+								<div class="progress-bar-fill" id="progressBarFill" style="width: 42%;"></div>
+							</div>
+							<span id="totalTime" class="time-stamp">3:20</span>
+						</div>
+						<div class="music-controls">
+							<button class="music-btn" id="shuffleBtn" aria-label="Shuffle"><i data-lucide="shuffle"></i></button>
+							<button class="music-btn" id="prevTrackBtn" aria-label="Previous Track"><i data-lucide="skip-back"></i></button>
+							<button class="music-btn play-btn" id="playPauseBtn" aria-label="Play/Pause"><i data-lucide="play" id="playIcon"></i></button>
+							<button class="music-btn" id="nextTrackBtn" aria-label="Next Track"><i data-lucide="skip-forward"></i></button>
+							<button class="music-btn" id="repeatBtn" aria-label="Repeat"><i data-lucide="repeat"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- Date and Weather 
 
@@ -67,8 +101,10 @@
 		</div>
 
 		<div class="imageBlock" id="imageBlock">
-			<img src="assets/floating-img/Ghej89jacAIPBZw.png" alt="Lucyna art by @ireading62">
+			<img src="assets/floating-img/Ghej89jacAIPBZw.png" alt="Artwork 1" class="side-img">
+			<img src="assets/floating-img/GhdtMl9bgAAJI0g.jfif" alt="Artwork 2" class="side-img">
 		</div>
+
 	</div>
 
 
@@ -85,7 +121,9 @@
 	<!-- Generators  -->
 	<script src="assets/js/buttons.js"></script>
 	<!-- <script src="assets/js/lists.js"></script> -->
+	<script src="assets/js/musicPlayer.js"></script>
 	<script src="assets/js/imageCarousel.js"></script>
+
 
 	<!-- Icons -->
 	<script>

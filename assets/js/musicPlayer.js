@@ -1,117 +1,144 @@
-// Music Player Interactivity for Bento
+// Music Player Interactivity for Bento (Auto-Detection HTML5 Engine)
 (function () {
-	const playlist = [
+	let playlist = [
 		{
-			title: 'Cyberpunk Synthwave',
-			artist: 'Yue Beats',
-			cover: 'assets/floating-img/GhdXPCPakAA3XCs.jfif',
-			duration: '3:20',
-			seconds: 200,
-		},
-		{
-			title: 'Lo-Fi Chill & Relax',
+			title: 'Fly-Day Chinatown',
 			artist: 'Ichihana Yue',
-			cover: 'assets/floating-img/GhdtMl9bgAAJI0g.jfif',
-			duration: '2:45',
-			seconds: 165,
+			src: 'assets/musics/01 - Fly-Day Chinatown.flac',
 		},
 		{
-			title: 'Midnight Starlight',
-			artist: 'Mori Melody',
-			cover: 'assets/floating-img/Ghej89jacAIPBZw.png',
-			duration: '3:50',
-			seconds: 230,
+			title: 'Daydream',
+			artist: 'Ichihana Yue',
+			src: 'assets/musics/02 Daydream.flac',
 		},
 		{
-			title: 'Neon Horizon',
-			artist: 'Vocaloid Sunset',
-			cover: 'assets/floating-img/GhdtTUYacAADz0v.jfif',
-			duration: '4:12',
-			seconds: 252,
+			title: 'Paul Porry Polor',
+			artist: 'Ichihana Yue',
+			src: 'assets/musics/07 - Paul Porry Polor.flac',
 		},
 	];
 
 	let trackIndex = 0;
-	let isPlaying = false;
-	let currentSec = 84; // 1:24 default
-	let timer = null;
+	const audio = new Audio();
+	window.bentoAudio = audio;
+	window.bentoPlaylist = playlist;
 
-	const coverElem = document.getElementById('musicCover');
 	const titleElem = document.getElementById('trackTitle');
 	const artistElem = document.getElementById('trackArtist');
-	const currentTimeElem = document.getElementById('currentTime');
-	const totalTimeElem = document.getElementById('totalTime');
-	const progressFill = document.getElementById('progressBarFill');
 	const playPauseBtn = document.getElementById('playPauseBtn');
 	const nextBtn = document.getElementById('nextTrackBtn');
 	const prevBtn = document.getElementById('prevTrackBtn');
-	const progressBg = document.getElementById('progressBarBg');
+	const spinningDisk = document.getElementById('spinningDisk');
 
 	if (!titleElem) return;
 
-	function formatTime(secs) {
-		const m = Math.floor(secs / 60);
-		const s = Math.floor(secs % 60);
-		return `${m}:${s < 10 ? '0' : ''}${s}`;
+	function parseFilenameToTrack(filename) {
+		const nameWithoutExt = filename.replace(/\.(mp3|wav|ogg|m4a|flac)$/i, '');
+		const cleanName = nameWithoutExt.replace(/^\d+[\s\-_]*/, '').trim();
+
+		if (cleanName.includes(' - ')) {
+			const parts = cleanName.split(' - ');
+			return {
+				title: parts[1].trim(),
+				artist: parts[0].trim(),
+				src: `assets/musics/${filename}`
+			};
+		}
+
+		return {
+			title: cleanName || filename,
+			artist: 'Ichihana Yue',
+			src: `assets/musics/${filename}`
+		};
 	}
 
-	function updateTrackDisplay() {
-		const track = playlist[trackIndex];
-		if (coverElem) coverElem.src = track.cover;
-		if (titleElem) titleElem.innerText = track.title;
-		if (artistElem) artistElem.innerText = track.artist;
-		if (totalTimeElem) totalTimeElem.innerText = track.duration;
-		currentSec = 0;
-		updateProgress();
-	}
-
-	function updateProgress() {
-		const track = playlist[trackIndex];
-		const pct = Math.min(100, (currentSec / track.seconds) * 100);
-		if (progressFill) progressFill.style.width = `${pct}%`;
-		if (currentTimeElem) currentTimeElem.innerText = formatTime(currentSec);
-	}
-
-	function togglePlay() {
-		isPlaying = !isPlaying;
-		if (isPlaying) {
-			if (playPauseBtn) playPauseBtn.innerHTML = '<i data-lucide="pause"></i>';
+	function updatePlayState(isPlaying) {
+		if (spinningDisk) {
+			if (isPlaying) {
+				spinningDisk.classList.add('is-playing');
+			} else {
+				spinningDisk.classList.remove('is-playing');
+			}
+		}
+		if (playPauseBtn) {
+			playPauseBtn.innerHTML = isPlaying ? '<i data-lucide="pause"></i>' : '<i data-lucide="play"></i>';
 			if (window.lucide) window.lucide.createIcons();
-			timer = setInterval(() => {
-				currentSec++;
-				if (currentSec > playlist[trackIndex].seconds) {
-					nextTrack();
-				} else {
-					updateProgress();
-				}
-			}, 1000);
-		} else {
-			if (playPauseBtn) playPauseBtn.innerHTML = '<i data-lucide="play"></i>';
-			if (window.lucide) window.lucide.createIcons();
-			clearInterval(timer);
 		}
 	}
 
-	function nextTrack() {
-		trackIndex = (trackIndex + 1) % playlist.length;
-		updateTrackDisplay();
+	function loadTrack(index, shouldPlay = false) {
+		if (!playlist || playlist.length === 0) return;
+		trackIndex = (index + playlist.length) % playlist.length;
+		const track = playlist[trackIndex];
+
+		if (titleElem) titleElem.innerText = track.title;
+		if (artistElem) artistElem.innerText = track.artist;
+
+		audio.src = track.src;
+		audio.load();
+
+		if (shouldPlay) {
+			playAudio();
+		} else {
+			updatePlayState(false);
+		}
 	}
 
-	function prevTrack() {
-		trackIndex = (trackIndex - 1 + playlist.length) % playlist.length;
-		updateTrackDisplay();
+	function playAudio() {
+		audio.play().then(() => {
+			updatePlayState(true);
+		}).catch(err => {
+			console.log('Audio playback error / autoplay policy:', err);
+			updatePlayState(false);
+		});
+	}
+
+	function pauseAudio() {
+		audio.pause();
+		updatePlayState(false);
+	}
+
+	function togglePlay() {
+		if (audio.paused) {
+			playAudio();
+		} else {
+			pauseAudio();
+		}
+	}
+
+	function nextTrack(autoPlay = true) {
+		loadTrack(trackIndex + 1, autoPlay);
+	}
+
+	function prevTrack(autoPlay = true) {
+		loadTrack(trackIndex - 1, autoPlay);
+	}
+
+	// Auto-detect audio files from assets/musics/index.json
+	async function autoDetectMusics() {
+		try {
+			const response = await fetch('assets/musics/index.json');
+			if (response.ok) {
+				const filenames = await response.json();
+				if (Array.isArray(filenames) && filenames.length > 0) {
+					playlist = filenames.map(parseFilenameToTrack);
+					window.bentoPlaylist = playlist;
+				}
+			}
+		} catch (e) {
+			console.log('Using default detected musics playlist:', e);
+		}
+		loadTrack(0, false);
 	}
 
 	if (playPauseBtn) playPauseBtn.addEventListener('click', togglePlay);
-	if (nextBtn) nextBtn.addEventListener('click', nextTrack);
-	if (prevBtn) prevBtn.addEventListener('click', prevTrack);
+	if (nextBtn) nextBtn.addEventListener('click', () => nextTrack(!audio.paused));
+	if (prevBtn) prevBtn.addEventListener('click', () => prevTrack(!audio.paused));
 
-	if (progressBg) {
-		progressBg.addEventListener('click', (e) => {
-			const rect = progressBg.getBoundingClientRect();
-			const clickPos = (e.clientX - rect.left) / rect.width;
-			currentSec = Math.floor(clickPos * playlist[trackIndex].seconds);
-			updateProgress();
-		});
-	}
+	audio.addEventListener('play', () => updatePlayState(true));
+	audio.addEventListener('pause', () => updatePlayState(false));
+	audio.addEventListener('ended', () => nextTrack(true));
+
+	// Initialize auto-detection
+	autoDetectMusics();
 })();

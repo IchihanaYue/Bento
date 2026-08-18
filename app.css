@@ -208,8 +208,8 @@ body {
   height: 95vh;
   max-height: 95vh;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto repeat(4, 1fr);
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: auto repeat(10, 1fr);
   column-gap: 45px;
   row-gap: 45px;
   padding: 20px;
@@ -232,8 +232,8 @@ body {
 }
 
 .musicPlayerBlock {
-  grid-row: 4 / span 2;
-  grid-column: 1 / span 2;
+  grid-row: 8 / span 4;
+  grid-column: 2 / span 4;
   width: 100%;
   height: 100%;
   display: flex;
@@ -421,8 +421,8 @@ body {
 }
 
 .timeBlock {
-  grid-row: 2 / span 2;
-  grid-column: 1 / span 2;
+  grid-row: 2 / span 4;
+  grid-column: 2 / span 4;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -559,8 +559,8 @@ body {
 
 .imageBlock {
   display: flex;
-  grid-row: 2 / span 3;
-  grid-column: 3 / span 2;
+  grid-row: 2 / span 7;
+  grid-column: 6 / span 4;
   width: 100%;
   height: 90%;
   padding: 0;
@@ -646,8 +646,8 @@ body {
 
 
 .linksBlock {
-  grid-row: 4 / span 2;
-  grid-column: 3 / span 2;
+  grid-row: 10 / span 2;
+  grid-column: 6 / span 4;
   display: flex;
   align-items: flex-end;
   justify-content: center;

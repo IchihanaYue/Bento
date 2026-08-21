@@ -17,6 +17,8 @@
 
 	let activeIndex = 0;
 	const total = floatingImages.length;
+	let isAnimating = false;
+	let timer = null;
 
 	// Viewport track
 	const track = document.createElement('div');
@@ -31,7 +33,7 @@
 	function createCard(imgSrc, positionClass) {
 		const card = document.createElement('div');
 		card.className = `peek-card ${positionClass}`;
-		card.innerHTML = `<img src="${imgSrc}" alt="Carousel Artwork">`;
+		card.innerHTML = `<img src="${imgSrc}" alt="Carousel Artwork" loading="lazy">`;
 		return card;
 	}
 
@@ -44,6 +46,8 @@
 	track.appendChild(rightCard);
 
 	function cycleNext() {
+		if (isAnimating) return;
+		isAnimating = true;
 		activeIndex = (activeIndex + 1) % total;
 
 		// The current left card moves to far left and gets removed
@@ -72,6 +76,7 @@
 			if (oldLeft && oldLeft.parentNode) {
 				oldLeft.parentNode.removeChild(oldLeft);
 			}
+			isAnimating = false;
 		}, TRANSITION_DURATION);
 
 		// Update card references
@@ -80,9 +85,89 @@
 		rightCard = newRightCard;
 	}
 
-	setInterval(cycleNext, CYCLE_INTERVAL);
+	function cyclePrev() {
+		if (isAnimating) return;
+		isAnimating = true;
+		activeIndex = (activeIndex - 1 + total) % total;
+
+		// Current right card moves to far right and gets removed
+		rightCard.className = 'peek-card peek-far-right';
+
+		// Current center becomes right peeking card
+		centerCard.className = 'peek-card peek-right';
+
+		// Current left becomes center active card
+		leftCard.className = 'peek-card peek-center';
+
+		// Create new left peeking card entering from far left
+		const newLeftIndex = getIndex(-1);
+		const newLeftCard = createCard(floatingImages[newLeftIndex], 'peek-far-left');
+		track.insertBefore(newLeftCard, track.firstChild);
+
+		// Force reflow
+		void newLeftCard.offsetWidth;
+
+		// Move new left card into peek-left position
+		newLeftCard.className = 'peek-card peek-left';
+
+		// Cleanup old right card
+		const oldRight = rightCard;
+		setTimeout(() => {
+			if (oldRight && oldRight.parentNode) {
+				oldRight.parentNode.removeChild(oldRight);
+			}
+			isAnimating = false;
+		}, TRANSITION_DURATION);
+
+		// Update card references
+		rightCard = centerCard;
+		centerCard = leftCard;
+		leftCard = newLeftCard;
+	}
+
+	function resetTimer() {
+		if (timer) clearInterval(timer);
+		timer = setInterval(cycleNext, CYCLE_INTERVAL);
+	}
+
+	// Click on peeking cards to navigate
+	track.addEventListener('click', (e) => {
+		const targetCard = e.target.closest('.peek-card');
+		if (!targetCard) return;
+		if (targetCard.classList.contains('peek-left')) {
+			cyclePrev();
+			resetTimer();
+		} else if (targetCard.classList.contains('peek-right')) {
+			cycleNext();
+			resetTimer();
+		}
+	});
+
+	// Touch swipe support for mobile / tablets
+	let touchStartX = 0;
+	let touchStartY = 0;
+
+	track.addEventListener('touchstart', (e) => {
+		if (e.touches.length === 1) {
+			touchStartX = e.touches[0].clientX;
+			touchStartY = e.touches[0].clientY;
+		}
+	}, { passive: true });
+
+	track.addEventListener('touchend', (e) => {
+		if (e.changedTouches.length === 1) {
+			const deltaX = e.changedTouches[0].clientX - touchStartX;
+			const deltaY = e.changedTouches[0].clientY - touchStartY;
+			if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+				if (deltaX < 0) {
+					cycleNext();
+				} else {
+					cyclePrev();
+				}
+				resetTimer();
+			}
+		}
+	}, { passive: true });
+
+	resetTimer();
 })();
-
-
-
-

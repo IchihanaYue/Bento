@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>New Tab</title>
 	<link rel=" shortcut icon" type="image/png" href="assets/img/81800.png" />
 	<link rel="stylesheet" href="app.css" />
@@ -57,6 +58,23 @@
 			</div>
 		</div>
 
+		<!-- Weather Block (Right side of Music Block, offset down) -->
+		<div class="weatherBlock" id="weatherBlock">
+			<div class="weather">
+				<div class="weatherIcon">
+					<img src="assets/icons/OneDark/02d.png" alt="Weather" />
+				</div>
+				<div class="weatherInfo">
+					<div class="weatherValue">
+						<p>24°<span class="tempUnit">C</span></p>
+					</div>
+					<div class="weatherDescription">
+						<p>Few Clouds</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- Clock and Greetings  -->
 		<div class="timeBlock">
 			<div class="time-header">
@@ -73,59 +91,13 @@
 			</div>
 		</div>
 
-		<!-- Music Player -->
-		<!-- <div class="musicPlayerBlock" id="musicPlayerBlock">
-			<div class="music-player-container">
-				<div class="music-cover">
-					<img id="musicCover" src="assets/floating-img/GhdXPCPakAA3XCs.jfif" alt="Track Cover">
-				</div>
-				<div class="music-card">
-					<div class="music-info">
-						<div class="track-details">
-							<span id="trackTitle" class="track-title">Cyberpunk Synthwave</span>
-							<span id="trackArtist" class="track-artist">Yue Beats</span>
-						</div>
-						<div class="progress-container">
-							<span id="currentTime" class="time-stamp">1:24</span>
-							<div class="progress-bar-bg" id="progressBarBg">
-								<div class="progress-bar-fill" id="progressBarFill" style="width: 42%;"></div>
-							</div>
-							<span id="totalTime" class="time-stamp">3:20</span>
-						</div>
-						<div class="music-controls">
-							<button class="music-btn" id="shuffleBtn" aria-label="Shuffle"><i data-lucide="shuffle"></i></button>
-							<button class="music-btn" id="prevTrackBtn" aria-label="Previous Track"><i data-lucide="skip-back"></i></button>
-							<button class="music-btn play-btn" id="playPauseBtn" aria-label="Play/Pause"><i data-lucide="play" id="playIcon"></i></button>
-							<button class="music-btn" id="nextTrackBtn" aria-label="Next Track"><i data-lucide="skip-forward"></i></button>
-							<button class="music-btn" id="repeatBtn" aria-label="Repeat"><i data-lucide="repeat"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
-
-		<!-- Date and Weather 
-
-			<div class="weatherBlock">
-				<div class="weather">
-					<div class="weatherIcon">
-						<img src="assets/icons/OneDark/unknown.png" />
-					</div>
-					<div class="weatherValue">
-						<p>- °<span class="g">c</span></p>
-					</div>
-					<div class="weatherDescription">
-						<p></p>
-					</div>
-				</div>
-			</div> -->
-
+		<!-- Links Block -->
 		<div class="linksBlock" id="linksBlock">
 			<div class="linksBlockLeft" id="linksBlockLeft"></div>
 			<!-- <div class="linksBlockRight" id="linksBlockRight"></div> -->
 		</div>
 
+		<!-- Image Carousel Block -->
 		<div class="imageBlock" id="imageBlock">
 			<img src="assets/floating-img/Ghej89jacAIPBZw.png" alt="Artwork 1" class="side-img">
 			<img src="assets/floating-img/GhdtMl9bgAAJI0g.jfif" alt="Artwork 2" class="side-img">
@@ -142,14 +114,13 @@
 	<!-- <script src="assets/js/theme.js"></script> -->
 	<script src="assets/js/time.js"></script>
 	<script src="assets/js/greeting.js"></script>
-	<!-- <script src="assets/js/weather.js"></script> -->
+	<script src="assets/js/weather.js"></script>
 
 	<!-- Generators  -->
 	<script src="assets/js/buttons.js"></script>
 	<!-- <script src="assets/js/lists.js"></script> -->
 	<script src="assets/js/musicPlayer.js"></script>
 	<script src="assets/js/imageCarousel.js"></script>
-
 
 	<!-- Icons -->
 	<script>

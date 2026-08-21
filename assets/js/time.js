@@ -3,20 +3,19 @@
 //  ┴ ┴┴ ┴└─┘
 // Set time and Date
 
-window.onload = displayClock();
 function displayClock() {
 	const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-	var d = new Date();
-	var dayName = dayNames[d.getDay()];
-	var mm = monthNames[d.getMonth()];
-	var dd = d.getDate();
-	var yyyy = d.getFullYear();
+	const d = new Date();
+	const dayName = dayNames[d.getDay()];
+	const mm = monthNames[d.getMonth()];
+	const dd = d.getDate();
+	const yyyy = d.getFullYear();
 
-	var min = ('0' + d.getMinutes()).slice(-2);
-	var hh = d.getHours();
-	var ampm = '';
+	const min = ('0' + d.getMinutes()).slice(-2);
+	let hh = d.getHours();
+	let ampm = '';
 
 	if (CONFIG.twelveHourFormat) {
 		ampm = hh >= 12 ? ' pm' : ' am';
@@ -24,24 +23,25 @@ function displayClock() {
 		hh = hh ? hh : 12;
 	}
 
-	var hourElem = document.getElementById('hour');
-	var sepElem = document.getElementById('separator');
-	var minElem = document.getElementById('minutes');
+	const hourElem = document.getElementById('hour');
+	const sepElem = document.getElementById('separator');
+	const minElem = document.getElementById('minutes');
 
 	if (hourElem) hourElem.innerText = hh;
 	if (sepElem) sepElem.innerText = ':';
 	if (minElem) minElem.innerText = min + ampm;
 
-	var fullDateElem = document.getElementById('full-date');
+	const fullDateElem = document.getElementById('full-date');
 	if (fullDateElem) {
 		fullDateElem.innerText = `${dayName}, ${mm} ${dd}, ${yyyy}`;
 	}
 
-	var monthElem = document.getElementById('month');
-	var dayElem = document.getElementById('day');
+	const monthElem = document.getElementById('month');
+	const dayElem = document.getElementById('day');
 	if (monthElem) monthElem.innerText = mm;
 	if (dayElem) dayElem.innerText = dd;
 
 	setTimeout(displayClock, 1000);
 }
 
+displayClock();

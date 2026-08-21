@@ -4,6 +4,12 @@
 // Generate Layout.
 
 const generateLayout = () => {
+	const linksBlock = document.getElementById('linksBlock');
+	const linksBlockLeft = document.getElementById('linksBlockLeft');
+	const linksBlockRight = document.getElementById('linksBlockRight');
+
+	if (!linksBlock || !linksBlockLeft) return;
+
 	let firstButtonsContainer = `
     <div class="buttonsContainer" id="buttons_1"></div>
   `;
@@ -13,7 +19,6 @@ const generateLayout = () => {
 	let firstListsContainer = `
     <div class="listsContainer" id="lists_1"></div>
   `;
-
 	let secondListsContainer = `
     <div class="listsContainer" id="lists_2"></div>
   `;
@@ -23,18 +28,23 @@ const generateLayout = () => {
 	switch (CONFIG.bentoLayout) {
 		case 'bento':
 			linksBlockLeft.insertAdjacentHTML(position, firstButtonsContainer);
-			linksBlockRight.insertAdjacentHTML(position, firstListsContainer);
-			linksBlock.classList.remove('reduceGap');
-			linksBlock.classList.remove('removeGap');
+			if (linksBlockRight) {
+				linksBlockRight.insertAdjacentHTML(position, firstListsContainer);
+			}
+			linksBlock.classList.remove('reduceGap', 'removeGap');
 			break;
 		case 'lists':
 			linksBlockLeft.insertAdjacentHTML(position, firstListsContainer);
-			linksBlockRight.insertAdjacentHTML(position, secondListsContainer);
+			if (linksBlockRight) {
+				linksBlockRight.insertAdjacentHTML(position, secondListsContainer);
+			}
 			linksBlock.classList.add('reduceGap');
 			break;
 		case 'buttons':
 			linksBlockLeft.insertAdjacentHTML(position, firstButtonsContainer);
-			linksBlockRight.insertAdjacentHTML(position, secondButtonsContainer);
+			if (linksBlockRight) {
+				linksBlockRight.insertAdjacentHTML(position, secondButtonsContainer);
+			}
 			linksBlock.classList.add('removeGap');
 			break;
 		default:
